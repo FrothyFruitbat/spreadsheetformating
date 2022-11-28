@@ -1,0 +1,40 @@
+  let myHeaders = [["Email", "First name", "Last name", "Job Company", "Country", "Marketing Lead Source Detail", "Lifecycle stage"]];
+  ready.getRange("A1:G1").setValues(myHeaders);
+
+
+/* change to incorperate entire range*/
+  for (let i = 2; i < newCount; i++) {
+    var cellRange: string = ("B" + i)
+    var cellRange2: string = ("C" + i)
+    var cellRange3: string = ("F" + i)
+    var cellRange4: string = ("G" + i)
+    var cellRange0: string = ("A" + i)
+    var deleteRange: string = (cellRange0 + ":" + cellRange4)
+    let viewRange = ready.getRange(cellRange);
+    var str = viewRange.getValue();
+    var lstr: string =  str.toLowerCase()
+    var splitted = lstr.split(" ", 2);
+    
+    /*split first and last*/
+
+    var first: string = splitted[0];
+    var last: string = splitted[1];
+    /* use current cell to insert data*/
+    ready.getRange(cellRange).setValue(first.charAt(0).toUpperCase() + first.slice(1));
+    ready.getRange(cellRange3).setValue("mined by JIVA import");
+    ready.getRange(cellRange4).setValue("Lead");
+
+
+
+    if (last === undefined) {
+      ready.getRange(deleteRange)
+        .delete(ExcelScript.DeleteShiftDirection.up);
+      i = i - 1
+    } else {
+      ready.getRange(cellRange2).setValue(last.charAt(0).toUpperCase() + last.slice(1));
+    }
+  }
+  let ppRange = ready.getUsedRange();
+  let ppRangec = ppRange.getRowCount();
+  console.log("Processing complete. Final contact count: " + ppRangec); 
+}
